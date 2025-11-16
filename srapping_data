@@ -1,0 +1,69 @@
+import requests
+import pandas as pd
+import time
+import os
+from io import StringIO
+
+# API endpoint
+url = "https://data-api.coindesk.com/index/cc/v1/historical/days"
+
+# Coins you want to download
+coins = ["BTC-USD", "ETH-USD", "XRP-USD", "LTC-USD", "BCH-USD", "ADA-USD", "SOL-USD", "DOGE-USD"]
+
+# API Key
+api_key = "004dec9b4f331df21d666c3e746c1cb996246688e2da"
+
+for coin in coins:
+    print(f"📥 Fetching data for {coin} ...")
+    
+    params = {
+        "market": "cadli",
+        "instrument": coin,
+        "aggregate": 1,
+        "fill": "true",
+        "apply_mapping": "true",
+        "response_format": "CSV",
+        "groups": "OHLC",
+        "limit": 2000,
+        "api_key": api_key
+    }
+
+    all_data = []
+    to_ts = int(time.time())  # start from now
+
+    while True:
+        params["to_ts"] = to_ts
+        response = requests.get(url, params=params, headers={"Accept": "text/csv"})
+        df = pd.read_csv(StringIO(response.text))
+
+        # if no data, stop
+        if df.empty:
+            break
+
+        # normalize timestamp column
+        if "time" in df.columns:
+            df["date"] = pd.to_datetime(df["time"], unit="s")
+        elif "TIMESTAMP" in df.columns:
+            df["date"] = pd.to_datetime(df["TIMESTAMP"], unit="s")
+
+        all_data.append(df)
+
+        # move back in time
+        if "time" in df.columns:
+            to_ts = int(df["time"].min()) - 1
+        elif "TIMESTAMP" in df.columns:
+            to_ts = int(df["TIMESTAMP"].min()) - 1
+
+        # stop if past 2010-01-01
+        if to_ts < 1262304000:
+            break
+
+    # combine all
+    full_df = pd.concat(all_data, ignore_index=True)
+    full_df = full_df.sort_values("date")
+
+    # save to Desktop with coin name
+    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", f"{coin.replace('-', '_')}_historical_daily.csv")
+    full_df.to_csv(desktop_path, index=False)
+
+    print(f"✅ {coin} saved with {len(full_df)} rows at: {desktop_path}")

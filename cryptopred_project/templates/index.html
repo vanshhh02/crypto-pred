@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center py-20">
+    <h1 class="text-5xl md:text-7xl font-black text-white mb-4">
+        Future of Crypto, <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">Unveiled.</span>
+    </h1>
+    <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+        Harness the power of AI. Our advanced LSTM models provide data-driven price predictions to guide your investment strategy.
+    </p>
+    <a href="{{ url_for('predict' if 'username' in session else 'login') }}" class="btn btn-primary text-lg inline-flex items-center space-x-2">
+        <span>Go to Dashboard</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+    </a>
+</div>
+
+<div class="py-16">
+    <h2 class="text-4xl font-bold text-center text-white mb-12">How It Works</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <!-- Step 1 -->
+        <div class="card">
+            <div class="text-5xl font-black text-blue-400 mb-4">01</div>
+            <h3 class="text-2xl font-bold text-white mb-2">Choose Your Asset</h3>
+            <p class="text-gray-400">Select from a list of major cryptocurrencies you want to analyze.</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="card">
+            <div class="text-5xl font-black text-blue-400 mb-4">02</div>
+            <h3 class="text-2xl font-bold text-white mb-2">Set Parameters</h3>
+            <p class="text-gray-400">Define the prediction timeframe and data granularity (daily or hourly).</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="card">
+            <div class="text-5xl font-black text-blue-400 mb-4">03</div>
+            <h3 class="text-2xl font-bold text-white mb-2">Get Your Forecast</h3>
+            <p class="text-gray-400">Our AI model processes the data and delivers a visual prediction chart in seconds.</p>
+        </div>
+    </div>
+</div>
+
+<div class="py-16">
+    <h2 class="text-4xl font-bold text-center text-white mb-12">Available Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card feature-card">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-1.414 1.414M21 12h-1M4 12H3m3.343-5.657l-1.414-1.414m12.728 0l-1.414 1.414M12 21v-1m-6.657-3.343l1.414-1.414" /></svg>
+            <h3 class="text-2xl font-bold text-white mb-2">AI-Powered Predictions</h3>
+            <p class="text-gray-400">Our fine-tuned LSTM models provide high-accuracy forecasts.</p>
+        </div>
+        <div class="card feature-card">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" /></svg>
+            <h3 class="text-2xl font-bold text-white mb-2">Intuitive Charts</h3>
+            <p class="text-gray-400">Visualize prediction data with interactive and easy-to-read charts.</p>
+        </div>
+        <div class="card feature-card">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <h3 class="text-2xl font-bold text-white mb-2">Historical Analysis</h3>
+            <p class="text-gray-400">Keep a history of all your predictions for tracking and analysis.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
